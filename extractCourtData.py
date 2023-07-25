@@ -70,12 +70,8 @@ def get_court_data(teamPlayerData, years):
                 if re.search(r"long weekend", gameTeams.lower()):
                     raise Exception("No game this week")
 
-                if re.search(r"\(w\)", gameTeams.lower()):
-                    teams = re.match(
-                        r"(?P<team1>.*)\W?(?:\(W\))? v (?P<team2>.*)\W?(?:\(B\))?", tableData[col][rowIndex])
-                else:
-                    teams = re.match(
-                        r"(?P<team1>.*) v (?P<team2>.*)", tableData[col][rowIndex])
+                teams = re.match(
+                    r"(?P<team1>.*?)\W?(?:\(W\).*)? v (?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
 
                 white = teams.group("team1")
                 black = teams.group("team2")
