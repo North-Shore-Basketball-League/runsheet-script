@@ -3,10 +3,11 @@ team-data.*
 output.*
 *.DS_Store
 **/**/setup/
-__pycache__/
-build/
+**/**__pycache__/
+**/**build/*
+**/**inno-dist/*
 .venv/
-dist/
-out/
+**/**dist/*
+out/*
 **/**.zip
 deploy/.env

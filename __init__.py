@@ -6,7 +6,7 @@ from time import sleep
 from exportSpreadsheet import ExportSpreadsheets
 from printing import Printing
 from extractCourtData import get_court_data
-from setup import check_setup
+from setupData import check_setup
 import xlwings as xw
 
 
