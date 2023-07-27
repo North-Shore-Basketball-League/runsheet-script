@@ -13,8 +13,7 @@ class ExtractWebData:
         options.add_argument("--headless")
         options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-        self.driver = Chrome(
-            service=ChromeService(ChromeDriverManager().install()), options=options, service_log_path="NUL")
+        driver = Chrome(service=ChromeService(ChromeDriverManager(version='114.0.5735.90').install()), options=options, service_log_path="NUL")
 
     def __del__(self):
         self.driver.quit()
