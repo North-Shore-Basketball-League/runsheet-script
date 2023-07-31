@@ -9,4 +9,3 @@ def checkImports(packages):
             continue
 
         print(module, "not found")
-        subprocess.check_call([executable, "-m", "pip", "install", module])
