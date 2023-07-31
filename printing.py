@@ -1,3 +1,7 @@
+import json
+from pathlib import Path
+
+
 class Printing:
     def __init__(self):
         pass
@@ -24,6 +28,16 @@ class Printing:
         print('\r', end="")
 
     def welcome(self):
+        versionPath = Path(__file__).parent / "version.json"
+        version = "Unknown version"
+
+        if versionPath.exists():
+            with versionPath.open() as f:
+                version = json.loads(versionPath.read_text(
+                    encoding="UTF-8"))["version"]
+
+        versionStr = f"{self.formatting.UNDERLINE}{self.formatting.OKCYAN}Running Version: {version}{self.formatting.ENDC}"
+
         print(f'''
 
 
@@ -37,7 +51,6 @@ class Printing:
 
 
     {self.formatting.HEADER}{self.formatting.OKBLUE}Starting to extract this weeks runsheet and scoresheets!{self.formatting.ENDC}
-    {self.formatting.UNDERLINE}{self.formatting.OKCYAN}Running Version: v1.2.0-beta.6{self.formatting.ENDC}
-
+    {versionStr}
 
 ''')

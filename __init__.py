@@ -1,6 +1,10 @@
 __all__ = ["export"]
 __author__ = "Toby Clark"
 
+# nopep8
+from checkImports import checkImports
+checkImports(["xlwings", "lxml", "python-Levenshtein", "thefuzz",
+             "webdriver_manager", "selenium", "pandas"])
 
 from time import sleep
 from exportSpreadsheet import ExportSpreadsheets
