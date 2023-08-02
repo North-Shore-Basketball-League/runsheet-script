@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 import json
 import xlwings as xw
+from printing import Printing
 
 
 def get_team_player_data(filename):
@@ -17,8 +18,8 @@ def get_team_player_data(filename):
     totalRows = teamDataWs.used_range.rows.count
     totalCols = teamDataWs.used_range.columns.count
 
-    for row in range(1, totalRows+1):
-        for col in range(1, totalCols+1):
+    for row in range(1, totalRows + 1):
+        for col in range(1, totalCols + 1):
             border = teamDataWs.range((row, col)).api.Borders.Value
             value = str(teamDataWs.range((row, col)).value)
 
@@ -32,9 +33,10 @@ def get_team_player_data(filename):
                 teams[index] = []
                 playerIndex = 1
 
-                while teamDataWs.range(row+playerIndex, col+3).value != None:
-                    playerNum = teamDataWs.range(row+playerIndex, col).value
-                    playerName = teamDataWs.range(row+playerIndex, col+3).value
+                while teamDataWs.range(row + playerIndex, col + 3).value != None:
+                    playerNum = teamDataWs.range(row + playerIndex, col).value
+                    playerName = teamDataWs.range(
+                        row + playerIndex, col + 3).value
 
                     teams[index].append([playerName, playerNum])
 
@@ -44,7 +46,7 @@ def get_team_player_data(filename):
                 matches = yearMatch.groups()
 
                 if matches[0] and matches[1]:
-                    currentYear = matches[0]+"/"+matches[1]
+                    currentYear = matches[0] + "/" + matches[1]
                 elif matches[2]:
                     currentYear = "adults"
                 else:
@@ -75,6 +77,9 @@ def create_setup_file(setupFP, teamDataJSONFileFP):
         "    Enter the team-data file location (drag and drop the file): ")
     outputFolder = get_fp(
         "    Enter the output folder location (drag and drop the folder): ")
+
+    Printing().print_new()
+    print(f"{Printing().formatting.OKBLUE} File paths entered successfully, starting setup{Printing().formatting.ENDC}")
 
     teamData = get_team_player_data(teamDataFP)
 
