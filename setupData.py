@@ -79,7 +79,7 @@ def create_setup_file(setupFP, teamDataJSONFileFP):
         "    Enter the output folder location (drag and drop the folder): ")
 
     Printing().print_new()
-    print(f"{Printing().formatting.OKBLUE} File paths entered successfully, starting setup{Printing().formatting.ENDC}")
+    print(f"    {Printing().formatting.OKBLUE} File paths entered successfully, starting setup{Printing().formatting.ENDC}")
 
     teamData = get_team_player_data(teamDataFP)
 
