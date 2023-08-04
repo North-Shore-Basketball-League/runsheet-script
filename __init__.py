@@ -40,6 +40,10 @@ def makeExcel(day, exportLink, teamPlayerData, outputFolder):
 
 
 def killall():
+    # Trying quitting gracefully
+    for app in xw.apps.keys():
+        xw.apps[app].quit()
+
     # Kill all excel processes
     for app in xw.apps.keys():
         print("Excel app still running with pid: ", app)
