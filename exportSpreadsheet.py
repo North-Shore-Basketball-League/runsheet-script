@@ -50,10 +50,10 @@ class ExportSpreadsheets:
     def _add_runsheet_data(self, data, game):
         if self.ageType == "kids":
             self._add_data_to_worksheet("runsheet", game,
-                                    data["white"] + " (W) vs " + data["black"] + " (B)", "runsheet")
+                                        data["white"] + " (W) vs " + data["black"] + " (B)", "runsheet")
         else:
             self._add_data_to_worksheet("runsheet", game,
-                                    data["white"] + " vs " + data["black"], "runsheet")
+                                        data["white"] + " vs " + data["black"], "runsheet")
 
     def _add_scoresheet_data(self, data, key, year):
         add = self._add_data_to_worksheet
@@ -74,16 +74,22 @@ class ExportSpreadsheets:
 
         worksheet = self.workbook.sheets[key]
 
+        if self.ageType == "kids":
+            data[whiteTeam].sort(key=lambda tup: tup[1] if tup[1]
+                                 != None else 0.0, reverse=True)
+            data[blackTeam].sort(key=lambda tup: tup[1] if tup[1]
+                                 != None else 0.0, reverse=True)
+
         for index, player in enumerate(data[whiteTeam]):
-            worksheet.range(self.templateVars["scoresheet"]["a_player_num"][0]+index,
+            worksheet.range(self.templateVars["scoresheet"]["a_player_num"][0] + index,
                             self.templateVars["scoresheet"]["a_player_num"][1]).value = player[1]
-            worksheet.range(self.templateVars["scoresheet"]["a_player_name"][0]+index,
+            worksheet.range(self.templateVars["scoresheet"]["a_player_name"][0] + index,
                             self.templateVars["scoresheet"]["a_player_name"][1]).value = player[0]
 
         for index, player in enumerate(data[blackTeam]):
-            worksheet.range(self.templateVars["scoresheet"]["b_player_num"][0]+index,
+            worksheet.range(self.templateVars["scoresheet"]["b_player_num"][0] + index,
                             self.templateVars["scoresheet"]["b_player_num"][1]).value = player[1]
-            worksheet.range(self.templateVars["scoresheet"]["b_player_name"][0]+index,
+            worksheet.range(self.templateVars["scoresheet"]["b_player_name"][0] + index,
                             self.templateVars["scoresheet"]["b_player_name"][1]).value = player[0]
 
     def _add_data_to_worksheet(self, sheet, var, data, type="scoresheet"):
@@ -129,15 +135,3 @@ class ExportSpreadsheets:
             after=self.workbook.sheets[prevWorksheet])
 
         copied.name = name
-
-
-if __name__ == "__main__":
-    testWorkbook = ExportSpreadsheets("test.xlsx")
-    testData = {"3/4": {"9c1": {"ateams": [["name", 0], ["name", 0]], "wjdf": [
-        ["name", 1], ["name", 1]], "time": "9", "white": "ateams", "black": "wjdf", "court": 1, }}, "4/5": {"11c1": {"ateams": [["name", 0], ["name", 0]], "wjdf": [
-            ["name", 1], ["name", 1]], "time": "11", "white": "ateams", "black": "wjdf", "court": 1, }}}
-
-    testWorkbook.add_data(testData)
-
-    print("saving data")
-    testWorkbook.save()
