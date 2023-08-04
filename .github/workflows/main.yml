@@ -10,6 +10,10 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@master
+      - name: Github tag
+        run: |
+          echo "Github tag pushed: ${{  github.ref_name  }}"
+          echo "Creating pre-release: ${{  contains(fromJson('["beta", "dev"]'), github.ref_name)  }}"
       - name: Archive Release
         uses: TheDoctor0/zip-release@0.7.1
         with:
