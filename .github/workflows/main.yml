@@ -14,22 +14,16 @@ jobs:
         run: |
           echo "Github tag pushed: ${{  github.ref_name  }}"
           echo "Creating pre-release: ${{  contains(github.ref_name, 'dev') || contains(github.ref_name, 'beta')  }}"
-    #   - name: Archive Release
-    #     uses: TheDoctor0/zip-release@0.7.1
-    #     with:
-    #       type: "zip"
-    #       filename: "release.zip"
-    #       exclusions: "*.git* /*node_modules/* .editorconfig"
-    #   - name: Upload PreRelease
-    #     if: contains(fromJson('["beta", "dev"]'), github.ref_name)
-    #     uses: ncipollo/release-action@v1.12.0
-    #     with:
-    #       artifacts: "release.zip"
-    #       prerelease: True
-    #   - name: Upload Release
-    #     if: contains(fromJson('["beta", "dev"]'), github.ref_name) == false
-    #     uses: ncipollo/release-action@v1.12.0
-    #     with:
-    #       artifacts: "release.zip"
-    #       generateReleaseNotes: True
-    #       replacesArtifacts: True
+      - name: Archive Release
+        uses: TheDoctor0/zip-release@0.7.1
+        with:
+          type: "zip"
+          filename: "release.zip"
+          exclusions: "*.git* /*node_modules/* .editorconfig"
+      - name: Upload Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: "release.zip"
+          prerelease: ${{  contains(github.ref_name, 'dev') || contains(github.ref_name, 'beta')  }}
+          generateReleaseNotes: True
+          replacesArtifacts: True
