@@ -67,7 +67,6 @@ def export():
                    ]
     wednesdayGame = [["adults", "https://www.nsbl.com.au/adultcompetition"]]
 
-    # Probably cleaner way to do this, however this should make both able to fail individually
     try:
         teamPlayerData, outputFolder = check_setup()
     except Exception as err:
