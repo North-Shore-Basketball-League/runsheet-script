@@ -49,7 +49,7 @@ def killall():
         print("Excel app still running with pid: ", app)
         xw.apps[app].kill()
 
-    # Worst case set excel apps to visible to be closed manually
+    # Worst case set excel  apps to visible to be closed manually
     if xw.apps.keys():
         for app in xw.apps.keys():
             xw.apps[app].visbile = True
