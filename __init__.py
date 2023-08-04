@@ -1,11 +1,6 @@
 __all__ = ["export"]
 __author__ = "Toby Clark"
 
-# nopep8
-# from checkImports import checkImports
-# checkImports([("xlwings", "xlwings/xlwings"), ("lxml", "lxml/lxml"), ("python-Levenshtein", "maxbachmann/python-Levenshtein"), ("thefuzz", "seatgeek/thefuzz"),
-#              ("webdriver_manager", "SergeyPirogov/webdriver_manager"), ("selenium", "SeleniumHQ/Selenium"), ("pandas", "pandas-dev/pandas")])
-
 from time import sleep
 from exportSpreadsheet import ExportSpreadsheets
 from printing import Printing
