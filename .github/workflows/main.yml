@@ -1,4 +1,4 @@
-name: Create Archive
+name: Create release zip
 on:
   push:
     tags:
@@ -17,13 +17,13 @@ jobs:
           filename: "release.zip"
           exclusions: "*.git* /*node_modules/* .editorconfig"
       - name: Upload PreRelease
-        if: contains(fromJson('["beta", "dev"]'), github.event.ref)
+        if: contains(fromJson('["beta", "dev"]'), github.ref_name)
         uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: "release.zip"
           prerelease: True
       - name: Upload Release
-        if: contains(fromJson('["beta", "dev"]'), github.event.ref) == false
+        if: contains(fromJson('["beta", "dev"]'), github.ref_name) == false
         uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: "release.zip"
