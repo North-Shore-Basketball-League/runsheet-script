@@ -13,7 +13,7 @@ jobs:
       - name: Github tag
         run: |
           echo "Github tag pushed: ${{  github.ref_name  }}"
-          echo "Creating pre-release: ${{  contains(github.ref_name, 'dev')  }}"
+          echo "Creating pre-release: ${{  contains(github.ref_name, 'dev') || contains(github.ref_name, 'beta')  }}"
     #   - name: Archive Release
     #     uses: TheDoctor0/zip-release@0.7.1
     #     with:
