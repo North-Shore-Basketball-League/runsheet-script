@@ -97,7 +97,7 @@ def create_setup_file(setupFP, teamDataJSONFileFP):
 
 def check_setup():
 
-    setupDataDir = Path(__file__).parent / "data" / "setup"
+    setupDataDir = Path(__file__).parent.parent / "runsheet-setup"
     setup = setupDataDir / "setup.json"
     teamData = setupDataDir / "team-data.json"
 
