@@ -53,6 +53,15 @@ def killall():
             "Excel not cleaned up! All apps set to visible")
 
 
+def try_catch_fail(msg, kill=False):
+    Printing().print_new()
+    print(msg)
+
+    if kill:
+        sleep(3)
+        killall()
+
+
 def export():
     Printing().welcome()
     sundayYears = [["3/4", "https://www.nsbl.com.au/years-3-4"],
@@ -65,23 +74,18 @@ def export():
     try:
         teamPlayerData, outputFolder = check_setup()
     except Exception as err:
-        Printing().print_new()
-        print("    Error occured getting setup:", err)
-        sleep(3)
-        killall()
+        try_catch_fail(f"    Error occured getting setup: {err}", True)
         return
 
     try:
         makeExcel("sunday", sundayYears, teamPlayerData, outputFolder)
     except Exception as err:
-        Printing().print_new()
-        print("    Error occured getting sunday games", err)
+        try_catch_fail(f"    Error occured getting sunday games {err}")
 
     try:
         makeExcel("wednesday", wednesdayGame, teamPlayerData, outputFolder)
     except Exception as err:
-        Printing().print_new()
-        print("Error occured getting wednesday games", err)
+        try_catch_fail(f"    Error occured getting Wednesday games {err}")
 
     killall()
     sleep(3)
