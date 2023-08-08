@@ -17,7 +17,8 @@ class ExtractWebData:
             driver_version='114.0.5735.90').install()), options=options)
 
     def __del__(self):
-        self.driver.quit()
+        if self.driver:
+            self.driver.quit()
 
     def _get_js_code(self, filePath):
         file = open(filePath)
