@@ -71,7 +71,7 @@ def get_court_data(teamPlayerData, years):
                     raise Exception("No game this week")
 
                 teams = re.match(
-                    r"(?P<team1>.*?)\W?(?:\(W\).*)? v (?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
+                    r"(?P<team1>.*?)\W?(?:(\(W\) (?:v )?)|( v ))(?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
 
                 white = teams.group("team1")
                 black = teams.group("team2")
@@ -82,7 +82,7 @@ def get_court_data(teamPlayerData, years):
                     matchYearNum = re.search(
                         r"(?P<y1>[1-9][0-9]|[1-9]).(?P<y2>[1-9][0-9]|[1-9])", year[0])
                     currentYear = matchYearNum.group(
-                        "y1")+"/"+matchYearNum.group("y2")
+                        "y1") + "/" + matchYearNum.group("y2")
 
                 playerDataWhite = white + "-" + currentYear
 
@@ -104,9 +104,9 @@ def get_court_data(teamPlayerData, years):
                         playerDataBlack = i
 
                 if venue.lower() == "st ives":
-                    dataIndex = timeNum+"_c"+court+"_s"
+                    dataIndex = timeNum + "_c" + court + "_s"
                 elif venue.lower() == "belrose":
-                    dataIndex = timeNum+"_c"+court+"_b"
+                    dataIndex = timeNum + "_c" + court + "_b"
                 else:
                     raise Exception("venue not st ives or belrose")
 
