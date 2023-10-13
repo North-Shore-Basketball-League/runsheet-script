@@ -70,6 +70,7 @@ def get_court_data(teamPlayerData, years):
                 if re.search(r"long weekend", gameTeams.lower()):
                     raise Exception("No game this week")
 
+                # This may throw some errors, is a very complex regex string
                 teams = re.match(
                     r"(?P<team1>.*?)\W?(?:(\(W\) (?:v )?)|( v ))(?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
 
