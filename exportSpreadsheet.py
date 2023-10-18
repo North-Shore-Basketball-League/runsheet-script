@@ -24,10 +24,6 @@ class ExportSpreadsheets:
             self._create_worksheet("runsheet-k", "runsheet")
             self.templateVars["runsheet"] = self._get_variable_pos(
                 self.template.sheets["runsheet-k"])
-        else:
-            self._create_worksheet("runsheet-a", "runsheet")
-            self.templateVars["runsheet"] = self._get_variable_pos(
-                self.template.sheets["runsheet-a"])
 
         if "Sheet1" in self.workbook.sheet_names:
             self.workbook.sheets["Sheet1"].delete()
@@ -51,9 +47,6 @@ class ExportSpreadsheets:
         if self.ageType == "kids":
             self._add_data_to_worksheet("runsheet", game,
                                         data["white"] + " (W) vs " + data["black"] + " (B)", "runsheet")
-        else:
-            self._add_data_to_worksheet("runsheet", game,
-                                        data["white"] + " vs " + data["black"], "runsheet")
 
     def _add_scoresheet_data(self, data, key, year):
         add = self._add_data_to_worksheet
