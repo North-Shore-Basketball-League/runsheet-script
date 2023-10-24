@@ -96,8 +96,8 @@ def get_court_data(teamPlayerData, years):
                         "black"
                     ]
 
-                    teamOneFuzzy = check_similarity_collection(teams.group("team1"))
-                    teamTwoFuzzy = check_similarity_collection(teams.group("team2")) 
+                    teamOneFuzzy = check_similarity_collection(teams.group("team1"), teamColours)
+                    teamTwoFuzzy = check_similarity_collection(teams.group("team2"), teamColours) 
 
                     if teamColours.index(teamOneFuzzy) < teamColours.index(teamTwoFuzzy):
                         white = teamOneFuzzy
