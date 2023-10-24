@@ -12,13 +12,16 @@ def check_similarity_string(str1, str2) -> bool:
         return True
     return False
 
+
 def max_compare_tuple(e):
-  return e[1]
+    return e[1]
+
 
 def check_similarity_collection(str1, arr) -> str:
-    similarityScore = [(i, check_similarity_string(str1, i)) for i in arr]
+    similarityScore = [(i, fuzz.ratio(str1, i)) for i in arr]
     closest = max(similarityScore, key=max_compare_tuple)
     return closest[0]
+
 
 def get_court_data(teamPlayerData, years):
     iframeJSFP = Path(__file__).parent / "data" / "getIframeURL.js"
@@ -81,7 +84,6 @@ def get_court_data(teamPlayerData, years):
                 teams = re.match(
                     r"(?P<team1>.*?)\W?(?:(\(W\) (?:v )?)|( v ))(?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
 
-
                 if year[0] == "adults":
                     currentYear = "adults"
 
@@ -96,8 +98,10 @@ def get_court_data(teamPlayerData, years):
                         "black"
                     ]
 
-                    teamOneFuzzy = check_similarity_collection(teams.group("team1"), teamColours)
-                    teamTwoFuzzy = check_similarity_collection(teams.group("team2"), teamColours) 
+                    teamOneFuzzy = check_similarity_collection(
+                        teams.group("team1"), teamColours)
+                    teamTwoFuzzy = check_similarity_collection(
+                        teams.group("team2"), teamColours)
 
                     if teamColours.index(teamOneFuzzy) < teamColours.index(teamTwoFuzzy):
                         white = teamOneFuzzy
