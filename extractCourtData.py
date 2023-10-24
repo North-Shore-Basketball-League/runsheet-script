@@ -1,7 +1,7 @@
 import datetime
 from pathlib import Path
 from dateutil.parser import parse
-from thefuzz import fuzz, process
+from thefuzz import fuzz
 from extractWebData import ExtractWebData
 import re
 from printing import Printing
@@ -16,7 +16,7 @@ def max_compare_tuple(e):
   return e[1]
 
 def check_similarity_collection(str1, arr) -> str:
-    similarityScore = process.extract(str1, arr, scorer=fuzz.ratio)
+    similarityScore = [(i, check_similarity_string(str1, i)) for i in arr]
     closest = max(similarityScore, key=max_compare_tuple)
     return closest[0]
 
