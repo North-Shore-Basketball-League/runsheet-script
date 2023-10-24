@@ -27,11 +27,11 @@ class ExportSpreadsheets:
 
         self.templateVars["scoresheet"] = self._get_variable_pos(
             self.template.sheets["scoresheet"])
-        
+
+    def save(self):
         if "Sheet1" in self.workbook.sheet_names:
             self.workbook.sheets["Sheet1"].delete()
 
-    def save(self):
         self.workbook.save(path=self.fileName)
         self.app.quit()
 
