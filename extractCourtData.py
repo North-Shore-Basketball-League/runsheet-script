@@ -1,17 +1,24 @@
 import datetime
 from pathlib import Path
 from dateutil.parser import parse
-from thefuzz import fuzz
+from thefuzz import fuzz, process
 from extractWebData import ExtractWebData
 import re
 from printing import Printing
 
 
-def check_similarity(str1, str2) -> bool:
+def check_similarity_string(str1, str2) -> bool:
     if fuzz.ratio(str1, str2) > 70:
         return True
     return False
 
+def max_compare_tuple(e):
+  return e[1]
+
+def check_similarity_collection(str1, arr) -> str:
+    similarityScore = process.extract(str1, arr, scorer=fuzz.ratio)
+    closest = max(similarityScore, key=max_compare_tuple)
+    return closest[0]
 
 def get_court_data(teamPlayerData, years):
     iframeJSFP = Path(__file__).parent / "data" / "getIframeURL.js"
@@ -74,12 +81,35 @@ def get_court_data(teamPlayerData, years):
                 teams = re.match(
                     r"(?P<team1>.*?)\W?(?:(\(W\) (?:v )?)|( v ))(?P<team2>.*?)\W?(?:\(B\).*)?$", tableData[col][rowIndex])
 
-                white = teams.group("team1")
-                black = teams.group("team2")
 
                 if year[0] == "adults":
                     currentYear = "adults"
+
+                    teamColours = [
+                        "white",
+                        "pink",
+                        "yellow",
+                        "orange",
+                        "green",
+                        "blue",
+                        "red",
+                        "black"
+                    ]
+
+                    teamOneFuzzy = check_similarity_collection(teams.group("team1"))
+                    teamTwoFuzzy = check_similarity_collection(teams.group("team2")) 
+
+                    if teamColours.index(teamOneFuzzy) < teamColours.index(teamTwoFuzzy):
+                        white = teamOneFuzzy
+                        black = teamTwoFuzzy
+                    else:
+                        white = teamTwoFuzzy
+                        black = teamOneFuzzy
+
                 else:
+                    white = teams.group("team1")
+                    black = teams.group("team2")
+
                     matchYearNum = re.search(
                         r"(?P<y1>[1-9][0-9]|[1-9]).(?P<y2>[1-9][0-9]|[1-9])", year[0])
                     currentYear = matchYearNum.group(
@@ -98,10 +128,10 @@ def get_court_data(teamPlayerData, years):
                     if dataYear != currentYear:
                         continue
 
-                    if check_similarity(white, team):
+                    if check_similarity_string(white, team):
                         playerDataWhite = i
 
-                    if check_similarity(black, team):
+                    if check_similarity_string(black, team):
                         playerDataBlack = i
 
                 if venue.lower() == "st ives":
