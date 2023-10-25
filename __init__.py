@@ -73,6 +73,7 @@ def export():
 
     try:
         teamPlayerData, outputFolder = check_setup()
+        print(teamPlayerData, outputFolder)
     except Exception as err:
         try_catch_fail(f"    Error occured getting setup: {err}", True)
         return
