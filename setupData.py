@@ -84,13 +84,14 @@ def create_setup_file(setupFP, teamDataJSONFileFP):
     teamData = get_team_player_data(teamDataFP)
 
     teamDataJSONFileFP.touch(exist_ok=True)
-    teamDataJSONFile = teamDataJSONFileFP.open("w")
-
     setupFP.touch(exist_ok=True)
-    setup = setupFP.open("w")
 
-    json.dump(teamData, teamDataJSONFile)
-    json.dump({"setupComplete": True, "outputFilePath": str(outputFolder)}, setup)
+    with teamDataJSONFileFP.open("w") as teamDataJSONFile:
+        json.dump(teamData, teamDataJSONFile)
+
+    with setupFP.open("w") as setup:
+        json.dump({"setupComplete": True,
+                  "outputFilePath": str(outputFolder)}, setup)
 
     return teamData, outputFolder
 
