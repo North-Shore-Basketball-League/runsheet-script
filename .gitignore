@@ -11,3 +11,4 @@ output.*
 out/*
 **/**.zip
 deploy/.env
+logs/**

@@ -1,5 +1,6 @@
 import pandas as pd
 from selenium.webdriver import Chrome, ChromeOptions
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 import json
@@ -7,8 +8,9 @@ import json
 
 class ExtractWebData:
     def __init__(self) -> None:
-        options = ChromeOptions()
+        options = Options()
         options.add_argument("--headless=new")
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
         self.driver = Chrome(options=options)
 
